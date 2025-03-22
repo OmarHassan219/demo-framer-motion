@@ -2,9 +2,9 @@
 import { carousselData } from "@/app/data"
 import Image from "next/image"
 import { motion, useAnimation } from "framer-motion"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export const Caroussel = () => {
+export const MobileCaroussel = () => {
     const itemVariants = {
         initial: (custom) => ({
             opacity: 0,
@@ -18,10 +18,18 @@ export const Caroussel = () => {
             transition: { duration: 0.9 }
         })
     }
+    const [itemWidth, setItemWidth] = useState(0)
 
     const controls = useAnimation()
     const arrowRectControls = useAnimation();
-    const itemWidth = 745
+    useEffect(() => {
+        const updateWidth = () => setItemWidth(window.innerWidth + 240)
+        if (typeof window !== "undefined") {
+            updateWidth()
+            window.addEventListener("resize", updateWidth)
+        }
+        return () => window.removeEventListener("resize", updateWidth)
+    }, [])
     const [currentIndex, setCurrentIndex] = useState(0)
 
 
@@ -37,17 +45,17 @@ export const Caroussel = () => {
 
 
         arrowRectControls.start({
-            // the arrow at the first elemnt in not centered so adding 132.5 will make it center on the next animation
-            width: nextIndex === 0 ? 78 : nextIndex * itemWidth + 132.5,
+            width: nextIndex === 0 ? 78 : nextIndex * itemWidth, 
             transition: { duration: 0.9, ease: "easeInOut" }
+
         });
 
 
     }
 
     return (
-        <section className="bg-[#e9eaf2] h-[100vh] flex-col items-center w-screen relative overflow-hidden hidden sm:flex">
-            <h1 className="text-[#141414] text-center text-5xl tracking-[-3%] pt-10 mb-[34px]">
+        <section className="bg-[#e9eaf2] h-[100vh] flex sm:hidden py-[30px] flex-col items-center w-screen relative overflow-hidden justify-between">
+            <h1 className="text-[#141414] text-center text-5xl tracking-[-3%] pt-10 ">
                 Our <span className="text-[#3E4095]">Journey</span>
             </h1>
 
@@ -59,10 +67,10 @@ export const Caroussel = () => {
                             initial="initial"
                             animate={index <= currentIndex ? "visible" : "hidden"}
                             key={index}
-                            className="flex-shrink-0 w-[505px] relative"
+                            className="flex-shrink-0 w-screen max-w-screen px-4 relative"
                         >
                             {index === 0 && (
-                                <div className="absolute flex items-center left-[102px] top-[122px]">
+                                <div className="absolute origin-left flex items-center left-[113px] top-[100px]">
                                     <motion.p animate={arrowRectControls} className="bg-[#141414B2] h-[6px] min-w-[78px] rounded-tl-[10px] rounded-bl-[10px]" />
                                     <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M21 9.6L6.6 17.9138L6.6 1.28616L21 9.6Z" fill="#B93637" />
@@ -71,14 +79,14 @@ export const Caroussel = () => {
                                 </div>
                             )}
 
-                            <div className="flex mb-[74px]">
-                                <div className="w-fit">
-                                    <p className="text-xl text-[#B32819] mb-[6px]">{obj.title}</p>
-                                    <h2 className="text-[#E0321F] leading-[120%] text-[60px]">{obj.year}</h2>
+                            <div className="flex gap-[22px] mb-[74px]">
+                                <div className="w-fit min-w-[95px]">
+                                    <p className=" text-sm text-[#B32819] mb-[6px]">{obj.title}</p>
+                                    <h2 className="text-[#E0321F] text-2xl leading-[120%] ">{obj.year}</h2>
                                 </div>
-                                <div className="text-[#222222CC] leading-[1.5]">{obj.description}</div>
+                                <div className="text-[#222222CC] text-xs leading-[1.5]">{obj.description}</div>
                             </div>
-                            <div className="mt-[74px] w-[505px]">
+                            <div className="mt-[74px] w-full">
                                 <Image
                                     src={obj.image.src}
                                     alt={obj.image.alt}
@@ -92,7 +100,7 @@ export const Caroussel = () => {
                 </motion.div>
             </div>
             <div className="text-center ">
-                <button type="button" className="text-[#3E4095] border border-[#3E4095] rounded-fulll text-base py-2 px-4 sm:text-base font-medium">Skip</button>
+                <button type="button" className="text-[#3E4095] border border-[#3E4095]  py-2 px-4 rounded-full text-[10px] font-medium">Skip</button>
             </div>
         </section>
     );
