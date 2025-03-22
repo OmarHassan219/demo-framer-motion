@@ -71,12 +71,12 @@ export const Caroussel = () => {
                                 </div>
                             )}
 
-                            <div className="flex mb-[74px]">
+                            <div className="flex mb-[74px] justify-between">
                                 <div className="w-fit">
                                     <p className="text-xl text-[#B32819] mb-[6px]">{obj.title}</p>
                                     <h2 className="text-[#E0321F] leading-[120%] text-[60px]">{obj.year}</h2>
                                 </div>
-                                <div className="text-[#222222CC] leading-[1.5]">{obj.description}</div>
+                                <div className="text-[#222222CC] leading-[1.5] w-[315px]">{obj.description}</div>
                             </div>
                             <div className="mt-[74px] w-[505px]">
                                 <Image
@@ -91,8 +91,8 @@ export const Caroussel = () => {
                     ))}
                 </motion.div>
             </div>
-            <div className="text-center ">
-                <button type="button" className="text-[#3E4095] border border-[#3E4095] rounded-fulll text-base py-2 px-4 sm:text-base font-medium">Skip</button>
+            <div className="text-center mt-auto mb-[18px]">
+                <button type="button" className="text-[#3E4095] border rounded-full  border-[#3E4095] rounded-fulll text-base py-2 px-4 sm:text-base font-medium">Skip</button>
             </div>
         </section>
     );
