@@ -3,7 +3,12 @@ import { carousselData } from "@/app/data"
 import Image from "next/image"
 import { motion, useAnimation } from "framer-motion"
 import { useEffect, useState } from "react"
+import { Inter } from "next/font/google"
 
+const inter = Inter({
+    weight: ['400', '700'], // You can specify other weights as needed
+    subsets: ["latin"],
+  });
 export const MobileCaroussel = () => {
     const itemVariants = {
         initial: (custom) => ({
@@ -19,7 +24,7 @@ export const MobileCaroussel = () => {
         })
     }
     const [itemWidth, setItemWidth] = useState(0)
-
+   
     const controls = useAnimation()
     const arrowRectControls = useAnimation();
     useEffect(() => {
@@ -45,7 +50,7 @@ export const MobileCaroussel = () => {
 
 
         arrowRectControls.start({
-            width: nextIndex === 0 ? 78 : nextIndex * itemWidth, 
+            width: nextIndex === 0 ? 78 : nextIndex * itemWidth + 70, 
             transition: { duration: 0.9, ease: "easeInOut" }
 
         });
@@ -84,7 +89,7 @@ export const MobileCaroussel = () => {
                                     <p className=" text-sm text-[#B32819] mb-[6px]">{obj.title}</p>
                                     <h2 className="text-[#E0321F] text-2xl leading-[120%] ">{obj.year}</h2>
                                 </div>
-                                <div className="text-[#222222CC] text-xs leading-[1.5]">{obj.description}</div>
+                                <div className={`text-[#222222CC] text-xs ${inter.className} leading-[1.5]`}>{obj.description}</div>
                             </div>
                             <div className="mt-[74px] w-full">
                                 <Image

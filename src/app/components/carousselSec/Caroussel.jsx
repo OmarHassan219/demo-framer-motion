@@ -3,7 +3,12 @@ import { carousselData } from "@/app/data"
 import Image from "next/image"
 import { motion, useAnimation } from "framer-motion"
 import { useState } from "react"
+import { Inter } from "next/font/google"
 
+const inter = Inter({
+  weight: ['400', '700'], // You can specify other weights as needed
+  subsets: ["latin"],
+});
 export const Caroussel = () => {
     const itemVariants = {
         initial: (custom) => ({
@@ -18,7 +23,7 @@ export const Caroussel = () => {
             transition: { duration: 0.9 }
         })
     }
-
+  
     const controls = useAnimation()
     const arrowRectControls = useAnimation();
     const itemWidth = 745
@@ -76,7 +81,7 @@ export const Caroussel = () => {
                                     <p className="text-xl text-[#B32819] mb-[6px]">{obj.title}</p>
                                     <h2 className="text-[#E0321F] leading-[120%] text-[60px]">{obj.year}</h2>
                                 </div>
-                                <div className="text-[#222222CC] leading-[1.5] w-[315px]">{obj.description}</div>
+                                <div className={`text-[#222222CC] leading-[1.5] ${inter.className} w-[315px]`}>{obj.description}</div>
                             </div>
                             <div className="mt-[74px] w-[505px]">
                                 <Image
